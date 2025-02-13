@@ -13,7 +13,7 @@ import modules from "./modules"
 
 Vue.use(Vuex)
 
-const getLegerModule = () => import("./modules/ledger")
+const getLegerModule = () => import("./modules/ledgernew")
 let isLegerModuleRegistered = false
 
 /**

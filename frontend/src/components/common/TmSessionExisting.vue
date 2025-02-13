@@ -20,7 +20,13 @@
           title="Use Ledger Nano (Doesn't work for ledger app version 1.15.0)"
           route="ledger"
         />
-
+        <LiSession
+          v-if="!isMobileApp && !isIframe"
+          id="use-ledger-nano-new"
+          icon="vpn_key"
+          title="New Ledger Nano with v1.15.0"
+          route="ledgernew"
+        />
         <LiSession
           v-if="!isMobileApp && !isIframe"
           id="use-metamask"
