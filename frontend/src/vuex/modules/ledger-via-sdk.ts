@@ -105,8 +105,10 @@ function processErrorResponse(response: any) {
 
 const SUCCESS = 0x9000
 const HD_PATH = `44'/1023'/0'/0`
-const CHAINID_SHARD0 = 1666600000
+const CHAINID_SHARD0 = 1666700000
 const PRECOMPILE_DEST = "0x00000000000000000000000000000000000000FC"
+//const CHAIN_ID_S0_TESTNET = 1666700000
+//const CHAIN_ID_S0_MAINNET = 1666600000
 
 export interface HarmonyAppResponse {
   return_code: string
@@ -138,7 +140,7 @@ export default class HarmonyApp {
   async publicKey(silentMode: boolean) {
     try {
       const eth = new Eth(this.transport)
-      const { address } = await eth.getAddress(`${HD_PATH}/0`, false, true)
+      const { address } = await eth.getAddress(`${HD_PATH}/10`, false, true)
       return {
         one_address: toBech32(address),
         return_code: SUCCESS
@@ -293,7 +295,7 @@ export default class HarmonyApp {
     let address: string = ""
     const eth = new Eth(this.transport)
     try {
-      const { address: a } = await eth.getAddress(`${HD_PATH}/0`, false, true)
+      const { address: a } = await eth.getAddress(`${HD_PATH}/10`, false, true)
       address = a
     } catch (err) {
       return processErrorResponse(err)
@@ -345,6 +347,7 @@ export default class HarmonyApp {
       const transaction: UnsignedTransaction = {
         // chainId: '0x' + BigInt(CHAINID_SHARD0).toString(16),
         chainId: CHAINID_SHARD0, // '0x' + BigInt(CHAINID_SHARD0).toString(16),
+        //chainId: chainId,
         value: 0,
         type: 0,
         // from: address,
@@ -365,7 +368,7 @@ export default class HarmonyApp {
       )
       // console.log("resolution", resolution)
       const { r, s, v } = await eth.signTransaction(
-        `${HD_PATH}/0`,
+        `${HD_PATH}/10`,
         unsignedRawTransaction.slice(2),
         resolution
       )
