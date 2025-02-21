@@ -12,6 +12,11 @@ const commitHash = require(`child_process`)
   .trim()
 
 module.exports = {
+  pwa: {
+    workboxOptions: {
+      maximumFileSizeToCacheInBytes: 5 * 1024 * 1024
+    }
+  },
   publicPath: `/`,
   transpileDependencies: ["viem", "abitype", "ox", "@noble/curves"],
   // chainWebpack: config => {
@@ -102,24 +107,33 @@ module.exports = {
           "object-src": `'none'`,
           "base-uri": `'self'`,
           "default-src": `'self'`,
-          "script-src": [`'self'`, `https://*.harmony.one`],
+          "script-src": [
+            `'self'`,
+            `https://*.harmony.one`,
+            `'unsafe-eval'`,
+            `'unsafe-inline'`
+          ],
           "worker-src": `'none'`,
-          "style-src": [`'self'`, `'unsafe-inline'`]
-          // "connect-src": [
-          //   // third party tools
-          //   //`https://api-iam.intercom.io`,
-          //   // mainnet
-          //   `https://stargate.lunie.io`,
-          //   `wss://rpc.lunie.io:26657`,
-          //   `https://stargate.cosmos.network`,
-          //   `wss://rpc.cosmos.network:26657`,
-          //   ...[process.env.STARGATE].filter(x => x !== undefined),
-          //   ...[process.env.RPC]
-          //     .filter(x => x !== undefined)
-          //     .map(x => x.replace("https", "wss"))
-          // ],
-          //"frame-src": [`'self'`, `https://api-iam.intercom.io`],
-          //"img-src": [`'self'`, `https://www.google-analytics.com/`]
+          "style-src": [`'self'`, `https://fonts.googleapis.com`, `'unsafe-inline'`],
+          "font-src": [`'self'`, `https://*.harmony.one`, `https://fonts.googleapis.com`, `https://fonts.gstatic.com`],
+          "connect-src": [
+            `'self'`,
+            `https://api.stake.hmny.io/`,
+            `https://api.s0.t.hmny.io/`,
+          ],
+          "img-src": [
+            `'self'`,
+            `data:`,
+            `https://www.google-analytics.com`,
+            `https://staking.harmony.one`,
+            `https://api.stake.hmny.io`
+          ]
+        }, {
+          enabled: false,
+          nonceEnabled: {
+            'script-src': false,
+            'style-src': false
+          }
         })
       )
     }
