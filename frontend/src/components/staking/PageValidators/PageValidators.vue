@@ -94,6 +94,7 @@ import { transactionToShortString } from "src/scripts/transaction-utils"
 import { ones, shortDecimals, zeroDecimals, twoDecimals } from "scripts/num"
 import tooltips from "src/components/tooltips"
 import MultidelegationModal from "src/ActionModal/components/MultidelegationModal"
+import TmDataLoading from "common/TmDataLoading"
 import { formatBech32 } from "../../../filters"
 import isEmpty from "lodash.isempty"
 
@@ -104,7 +105,8 @@ export default {
     TableValidators,
     PageContainer,
     TmField,
-    TmBtn
+    TmBtn,
+    TmDataLoading
   },
   filters: {
     ones,
@@ -115,7 +117,7 @@ export default {
   data: () => ({
     tooltips,
     searchTerm: "",
-    chainTitle: process.env.DEFAULT_CHAIN_TITLE,
+    localChainTitle: process.env.DEFAULT_CHAIN_TITLE,
     activeOnly: true
   }),
   computed: {
@@ -151,7 +153,7 @@ export default {
     }
   },
   mounted() {
-    this.chainTitle = this.$route.params.chaintitle
+    this.localChainTitle = this.$route.params.chaintitle
     if (
       !this.$store.dispatch(
         "setNetworkByChainTitle",
